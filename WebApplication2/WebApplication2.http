@@ -1,0 +1,62 @@
+@WebApplication2_HostAddress = http://localhost:5198
+
+GET {{WebApplication2_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+### Get all users
+GET {{WebApplication2_HostAddress}}/api/users
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJzdGVmYW5AZ21haWwuY29tIiwiZXhwIjoxNzgzMDg0NDIwLCJpc3MiOiJCYWNrZW5kTGVhcm5pbmciLCJhdWQiOiJCYWNrZW5kTGVhcm5pbmdVc2VycyJ9.F3NLngKKdVPH4i7W4tEiXHvlam2uNkdUzH6squCIWxc  
+
+###
+
+### Get user by id
+GET {{WebApplication2_HostAddress}}/api/users/6
+Accept: application/json
+
+###
+
+### Create user
+POST {{WebApplication2_HostAddress}}/api/users
+Content-Type: application/json
+
+{
+  "name": "Stefan",
+  "email": "stefan@gmail.com",
+  "password": "123456"
+}
+
+###
+
+### Update user
+PUT {{WebApplication2_HostAddress}}/api/users/6
+Content-Type: application/json
+
+{
+  "name": "Davor Updated",
+  "email": "davor.updated@gmail.com"
+ 
+}
+
+###
+
+### Delete user
+DELETE {{WebApplication2_HostAddress}}/api/users/5
+
+###
+
+### Get all users after delete
+GET {{WebApplication2_HostAddress}}/api/users
+Accept: application/json
+
+
+
+### Login
+POST http://localhost:5198/api/users/login
+Content-Type: application/json
+
+{
+  "email": "stefan@gmail.com",
+  "password": "123456"
+}

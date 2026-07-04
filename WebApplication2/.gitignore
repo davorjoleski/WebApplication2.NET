@@ -1,0 +1,24 @@
+# Build output
+bin/
+obj/
+
+# User secrets / configs
+appsettings.Development.json
+appsettings.Production.json
+
+# Database / local files
+*.db
+*.sqlite
+
+# Docker volumes (local state)
+pgdata/
+
+# IDE
+.vs/
+.vscode/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
