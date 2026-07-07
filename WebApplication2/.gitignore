@@ -365,4 +365,4 @@ FodyWeavers.xsd
 appsettings*.json
 
 .env
-k8s/Secret.yaml
+Secret.yaml
