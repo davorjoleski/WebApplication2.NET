@@ -1,0 +1,26 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+
+metadata:
+  name: webapi-hpa
+
+spec:
+  scaleTargetRef: # who to scale 
+    apiVersion: apps/v1
+    kind: Deployment
+    name: webapi-deployment
+
+  minReplicas: 2
+
+  maxReplicas: 10
+
+  metrics:
+    - type: Resource
+
+      resource:
+        name: cpu
+
+        target:
+          type: Utilization
+
+          averageUtilization: 70 # if its beyond this % add pod

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: webapi-config
+
+data:
+  ASPNETCORE_ENVIRONMENT: "Development"
+
+  ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=postgres;Username=postgres;Password=admin"

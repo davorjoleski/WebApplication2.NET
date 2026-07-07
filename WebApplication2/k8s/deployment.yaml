@@ -1,0 +1,45 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapi-deployment # Unique name for deployment
+spec:
+  
+  selector:
+    matchLabels:
+      app: webapi # The deployment looks for pods with this label
+  template: # This defines the pods that will be created
+    metadata:
+      labels: 
+        app: webapi # The label stamped onto your pods
+    spec: # Ова мора да биде под рамнината на metadata
+      initContainers:
+        - name: wait-for-postgres # Name of the init container
+          image: busybox:1.35.0 # Image for the init container
+          command: ['sh', '-c', 'until nc -z postgres 5432; do echo waiting for postgres; sleep 2; done;'] # Command to check if Postgres is ready
+      containers:
+        - name: webapi # Name of the container inside the pod
+          image: webapplication2-api:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe: # Пробите МОРА да бидат внатре во дефиницијата на контејнерот
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe: # Пробите МОРА да бидат внатре во дефиницијата на контејнерот
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          envFrom:
+            - configMapRef:
+                name: webapi-config

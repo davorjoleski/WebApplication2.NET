@@ -25,7 +25,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddFluentValidationAutoValidation();
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreateUserDtoValidator>();
-
+builder.Services.AddHealthChecks();
 //jwt
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 
@@ -65,6 +65,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+
 app.UseHttpsRedirection();
 
 app.UseMiddleware<ExceptionMiddleware>();
@@ -74,6 +75,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 using (var scope = app.Services.CreateScope())
 {

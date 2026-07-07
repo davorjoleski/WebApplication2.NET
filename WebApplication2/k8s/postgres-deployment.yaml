@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: postgres
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: postgres  #This tells the service to direct traffic to your postgres deployment
+
+  template:
+    metadata:
+      labels:
+        app: postgres   # Name  of the  pod inside cluster
+
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16
+          ports:
+            - containerPort: 5432
+  
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-storage
+
+          env:
+           - name: DB_PASSWORD
+             valueFrom:
+                secretKeyRef:
+                  name: webapi-secret
+                  key: DB_PASSWORD
+
+           - name: JWT_KEY
+             valueFrom:
+                 secretKeyRef:
+                   name: webapi-secret
+                   key: JWT_KEY
+
+      volumes:
+       - name: postgres-storage
+         persistentVolumeClaim:
+          claimName: postgres-pvc
+
+          
